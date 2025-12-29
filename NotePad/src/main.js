@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron/main')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 
 function createWindow() {
@@ -29,7 +29,21 @@ function createAnotherWindow(parent) {
     win.loadFile('src/second.html')
 }
 
+//创建一个回调函数更新窗体title
+//event -> 时间对象
+// 自己写的title 动作
+function handleSetTitle(event, title) {
+
+    console.log('the event from ipcRenderer', event)
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.setTitle(title)
+}
+
+
 app.on('ready', () => {
+
+    ipcMain.on('set-title', handleSetTitle)
 
     // const parent = createWindow()
     // createAnotherWindow(parent)
