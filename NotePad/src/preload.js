@@ -13,8 +13,13 @@ contextBridge.exposeInMainWorld('versions', {
 //将暴漏的版本号信息注入ℹ️
 
 contextBridge.exposeInMainWorld('electron', {
-    setTitle: (title) => ipcRenderer.send('set-title', title)
+
+    setTitle: (title) => ipcRenderer.send('set-title', title),
+    //Read the File Size
+    writeFile: (content) => ipcRenderer.invoke('write-file', content)
 })
+
+
 
 
 

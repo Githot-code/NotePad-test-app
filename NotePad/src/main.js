@@ -1,6 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 
+// 写入文件 Node.js fs文件写入模块
+const fs = require('fs')
+
+
+
 function createWindow() {
 
     const win = new BrowserWindow({
@@ -40,17 +45,26 @@ function handleSetTitle(event, title) {
     win.setTitle(title)
 }
 
+async function handleWriteFile(event, content) {
+
+    console.log('The content', content);
+    await fs.promises.writeFile('test.md', content)
+    const stats = await fs.promises.stat('test.md') //stats获取文件属性
+    return stats.size
+}
 
 app.on('ready', () => {
 
     ipcMain.on('set-title', handleSetTitle)
+    //write-read file
+    ipcMain.handle('write-file', handleWriteFile)
 
     // const parent = createWindow()
     // createAnotherWindow(parent)
     createWindow();
 })
 
-
+//
 
 // const win = new BrowserWindow({
 //         width: 850,
