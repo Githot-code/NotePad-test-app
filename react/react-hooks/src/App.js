@@ -2,13 +2,16 @@ import logo from './logo.svg';
 import './App.css';
 import LikeButton from './components/LikeButton';
 import MouseTracker from './components/MouseTracker';
+import DogShow from './components/DogShow';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <MouseTracker />
+        {/* <MouseTracker /> */}
+
+        <DogShow />
         <LikeButton />
         <a
           className="App-link"
